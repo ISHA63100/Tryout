@@ -47,27 +47,44 @@ def flag_duplicates(df):
     # Your duplicate flagging logic here
     pass
 
-def process(uploaded_file):
-    try:
-        if uploaded_file:
-            st.text("Your file is being processed...")
-            # Replace this with your actual classification logic
-            time.sleep(5)
-            st.text("Processing complete. Here are the results: ")
-    except Exception as e:
-        st.error(f"An error occurred: {str(e)}")
 
 def material_classification_page():
     pass
-
+def add_logo(size=250):
+    # Display the logo outside the container with a specified size
+    st.markdown(
+        f"""
+        <style>
+        .stImage {{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: {size}px;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    st.image("eren.png",width=size)
 def main():
-    st.image("eren.png", use_column_width=False, width=100)
+    add_logo(size=250)
     st.title("Microsoft Project")
-    
-    add_bg_from_local("eren.png")  # Replace with the correct file path of your background image
-    
    
+    add_bg_from_local("eren.png")  
     
+    # Position the logo at the left corner of the screen
+    st.markdown(
+        """
+        <style>
+        .stImage {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
     
     uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx", "xls", "csv"])
 
