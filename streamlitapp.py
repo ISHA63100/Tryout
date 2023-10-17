@@ -4,8 +4,7 @@ import pandas as pd
 # Define a function to perform keyword matching
 def keyword_matching(data):
     # Add your keyword matching logic here
-    # This is just a placeholder example
-    matched_data = data[data.str.contains("keyword", case=False)]
+   
     return matched_data
 
 def process_files(uploaded_file):
