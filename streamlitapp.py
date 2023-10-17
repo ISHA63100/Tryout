@@ -1,6 +1,13 @@
 import streamlit as st
 import pandas as pd
 
+# Define a function to perform keyword matching
+def keyword_matching(data):
+    # Add your keyword matching logic here
+    # This is just a placeholder example
+    matched_data = data[data.str.contains("keyword", case=False)]
+    return matched_data
+
 def process_files(uploaded_file):
     if uploaded_file:
         df = pd.read_excel(uploaded_file, nrows=30)
@@ -16,8 +23,9 @@ def process_files(uploaded_file):
             col1.dataframe(first_column_no_duplicates, height=300)  # Display the first column without duplicate values
 
         if col2.button("Submit anyway"):
-            # Add your code for "Submit anyway" action here
-            pass
+            # Call the keyword matching function when "Submit anyway" is clicked
+            matched_data = keyword_matching(first_column)
+            col2.dataframe(matched_data, height=300)  # Display the matched data
 
 def main():
     st.title("First Project")
