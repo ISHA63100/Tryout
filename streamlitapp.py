@@ -34,10 +34,10 @@ def center_buttons():
 
 def compare_columns(df):
     # Step 1: Compare (column 1) with (column 3)
-    compare_noun = df.iloc[:, 1] == df.iloc[:, 3]
+    compare_noun = df.iloc[:, 1].str.strip() == df.iloc[:, 3].str.strip()
 
     # Step 2: Compare (column 2) with (column 4)
-    compare_modifier = df.iloc[:, 2] == df.iloc[:, 4]
+    compare_modifier = df.iloc[:, 2].str.strip() == df.iloc[:, 4].str.strip()
 
     matching_noun_rows = compare_noun
     matching_modifier_rows = compare_modifier
