@@ -39,7 +39,6 @@ def compare_columns(df):
     # Step 2: Compare (column 2) with (column 4)
     compare_modifier = df.iloc[:, 2] == df.iloc[:, 4]
 
-    # Step 3: Combine the two boolean masks for nouns and verbs
     matching_noun_rows = compare_noun
     matching_modifier_rows = compare_modifier
 
