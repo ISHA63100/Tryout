@@ -32,10 +32,10 @@ def center_buttons():
         unsafe_allow_html=True,
     )
 
-def process_files(uploaded_file):
-    if uploaded_file:
-        df = pd.read_excel(uploaded_file, nrows=30)
-
+def process_files(df):
+    st.subheader("Sorted Data:")
+    st.dataframe(df, height=300)
+    if df is not None:
         if st.button("Download Duplicate flagged"):
             deduplicated = flag_duplicates(df)
             st.download_button("Download Duplicated flagged", deduplicated.to_csv(), key='download_duplicates', mime='text/csv')
@@ -43,15 +43,16 @@ def process_files(uploaded_file):
         if st.button("Go To Material Classification"):
             st.experimental_set_query_params(material_classification=True)  # Switch to Material Classification page
 
+   
+
 def flag_duplicates(df):
     # Your duplicate flagging logic here
     pass
 
-
 def material_classification_page():
     pass
+
 def add_logo(size=250):
-    # Display the logo outside the container with a specified size
     st.markdown(
         f"""
         <style>
@@ -65,14 +66,13 @@ def add_logo(size=250):
         """,
         unsafe_allow_html=True
     )
-    st.image("eren.png",width=size)
+    st.image("eren.png", width=size)
+
 def main():
     add_logo(size=250)
     st.title("Microsoft Project")
-   
-    add_bg_from_local("eren.png")  
-    
-    # Position the logo at the left corner of the screen
+    add_bg_from_local("eren.png")
+
     st.markdown(
         """
         <style>
@@ -85,7 +85,7 @@ def main():
         """,
         unsafe_allow_html=True
     )
-    
+
     uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx", "xls", "csv"])
 
     if uploaded_file is not None:
@@ -94,11 +94,27 @@ def main():
         if file_extension in ('xlsx', 'xls'):
             st.text("Excel file uploaded.")
             center_buttons()
-            process_files(uploaded_file)
+            df = pd.read_excel(uploaded_file)
+            
+            # Sort the DataFrame in ascending order by the first column
+            df = df.sort_values(by=df.columns[0])
+            
+            if not df.empty:  # Check if the DataFrame is not empty
+                process_files(df)  # Pass the sorted DataFrame to the function
+            else:
+                st.text("DataFrame is empty.")
         elif file_extension == 'csv':
             st.text("CSV file uploaded.")
             center_buttons()
-            process_files(uploaded_file)
+            df = pd.read_csv(uploaded_file)
+            
+            # Sort the DataFrame in ascending order by the first column
+            df = df.sort_values(by=df.columns[0])
+
+            if not df.empty:  # Check if the DataFrame is not empty
+                process_files(df)  # Pass the sorted DataFrame to the function
+            else:
+                st.text("DataFrame is empty.")
 
 if __name__ == "__main__":
     main()
