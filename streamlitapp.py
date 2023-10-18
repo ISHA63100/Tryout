@@ -47,10 +47,10 @@ def compare_columns(df):
     accuracy_noun = matching_noun_rows.sum() / len(df)
     accuracy_modifier = matching_modifier_rows.sum() / len(df)
 
-    # Display accuracy for "original noun" and "predicted noun"
+ 
     st.write(f"Accuracy for Nouns: {accuracy_noun:.2%}")
 
-# Display accuracy for "original verb" and "predicted verb"
+
     st.write(f"Accuracy for Verbs: {accuracy_modifier:.2%}")
 
 
