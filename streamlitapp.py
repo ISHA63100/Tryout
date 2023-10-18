@@ -32,10 +32,33 @@ def center_buttons():
         unsafe_allow_html=True,
     )
 
+def compare_columns(df):
+    # Step 1: Compare "original noun" (column 1) with "predicted noun" (column 3)
+    compare_noun = df.iloc[:, 1] == df.iloc[:, 3]
+
+    # Step 2: Compare "original verb" (column 2) with "predicted verb" (column 4)
+    compare_modifier = df.iloc[:, 2] == df.iloc[:, 4]
+
+    # Step 3: Combine the two boolean masks for nouns and verbs
+    matching_noun_rows = compare_noun
+    matching_modifier_rows = compare_modifier
+
+    # Step 4: Calculate accuracy for nouns and verbs separately
+    accuracy_noun = matching_noun_rows.sum() / len(df)
+    accuracy_modifier = matching_modifier_rows.sum() / len(df)
+
+    # Display accuracy for "original noun" and "predicted noun"
+    st.write(f"Accuracy for Nouns: {accuracy_noun:.2%}")
+
+# Display accuracy for "original verb" and "predicted verb"
+    st.write(f"Accuracy for Verbs: {accuracy_modifier:.2%}")
+
+
 def process_files(df):
-    st.subheader("Sorted Data:")
-    st.dataframe(df, height=300)
     if df is not None:
+        compare_columns(df)
+
+
         if st.button("Download Duplicate flagged"):
             deduplicated = flag_duplicates(df)
             st.download_button("Download Duplicated flagged", deduplicated.to_csv(), key='download_duplicates', mime='text/csv')
@@ -43,7 +66,10 @@ def process_files(df):
         if st.button("Go To Material Classification"):
             st.experimental_set_query_params(material_classification=True)  # Switch to Material Classification page
 
-   
+        st.subheader("Uploaded Data:")
+        st.dataframe(df, height=300)
+
+       
 
 def flag_duplicates(df):
     # Your duplicate flagging logic here
@@ -86,35 +112,17 @@ def main():
         unsafe_allow_html=True
     )
 
-    uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx", "xls", "csv"])
+    uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx", "xls"])
 
     if uploaded_file is not None:
-        file_extension = uploaded_file.name.split('.')[-1].lower()
+        file_extension = uploaded_file.name.split('.')[-1]
 
         if file_extension in ('xlsx', 'xls'):
-            st.text("Excel file uploaded.")
-            center_buttons()
+            st.text("Excel file uploaded. You can process it here.")
             df = pd.read_excel(uploaded_file)
-            
-            # Sort the DataFrame in ascending order by the first column
-            df = df.sort_values(by=df.columns[0])
-            
-            if not df.empty:  # Check if the DataFrame is not empty
-                process_files(df)  # Pass the sorted DataFrame to the function
-            else:
-                st.text("DataFrame is empty.")
-        elif file_extension == 'csv':
-            st.text("CSV file uploaded.")
-            center_buttons()
-            df = pd.read_csv(uploaded_file)
-            
-            # Sort the DataFrame in ascending order by the first column
-            df = df.sort_values(by=df.columns[0])
-
-            if not df.empty:  # Check if the DataFrame is not empty
-                process_files(df)  # Pass the sorted DataFrame to the function
-            else:
-                st.text("DataFrame is empty.")
+            process_files(df)  # Display and process the uploaded data
+        else:
+            st.text("Unsupported file type. Please upload an Excel file (XLSX or XLS).")
 
 if __name__ == "__main__":
     main()
