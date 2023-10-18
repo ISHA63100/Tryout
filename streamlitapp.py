@@ -51,7 +51,7 @@ def compare_columns(df):
     st.write(f"Accuracy for Nouns: {accuracy_noun:.2%}")
 
 
-    st.write(f"Accuracy for Verbs: {accuracy_modifier:.2%}")
+    st.write(f"Accuracy for Modifiers: {accuracy_modifier:.2%}")
 
 
 def process_files(df):
