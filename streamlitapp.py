@@ -18,6 +18,25 @@ def add_bg_from_local(image_file):
         """,
         unsafe_allow_html=True
     )
+def join_columns(row):
+    col1 = row['Description']
+    col2 = row['Noun']
+    col3 = row['Modifier']
+
+    words1 = col1.split()
+    words2 = col2.split()
+    words3 = col3.split()
+
+    # Find common words between col1 and col2 (col1 and col3), and remove them from col1
+    common_words2 = [word for word in words2 if word in words1]
+    common_words3 = [word for word in words3 if word in words1]
+
+    col1 = ' '.join([word for word in words1 if word not in common_words2 + common_words3])
+
+    # Join col2 and col3, followed by the modified col1
+    result = ' '.join(words2 + words3) + ' : ' + col1
+
+    return result
 
 def center_buttons():
     st.markdown(
