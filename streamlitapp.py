@@ -52,7 +52,12 @@ def compare_columns(df):
 
     st.write(f"Accuracy for Modifiers: {accuracy_modifier:.2%}")
 
-
+def remove_special_characters(text):
+    pattern = r"[,'-/()#@\[\]%.$]"
+    # Use re.sub() to replace matched special characters with an empty string
+    cleaned_text = re.sub(pattern, "", text)
+    return cleaned_text
+    
 def process_files(df):
     if df is not None:
         compare_columns(df)
