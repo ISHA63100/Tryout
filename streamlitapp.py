@@ -19,9 +19,9 @@ def add_bg_from_local(image_file):
         unsafe_allow_html=True
     )
 def join_columns(row):
-    col1 = row['Description']
-    col2 = row['Noun']
-    col3 = row['Modifier']
+    col1 = str(row['Description'])
+    col2 = str(row['Noun'])
+    col3 = str(row['Modifier'])
 
     words1 = col1.split()
     words2 = col2.split()
@@ -79,6 +79,7 @@ def remove_special_characters(text):
     
 def process_files(df):
     if df is not None:
+        df['New Column'] = df.apply(lambda row: join_columns(row), axis=1)
         df['description'] = df['description'].apply(remove_special_characters)
         compare_columns(df)
 
