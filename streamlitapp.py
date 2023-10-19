@@ -60,6 +60,7 @@ def remove_special_characters(text):
     
 def process_files(df):
     if df is not None:
+        df['description'] = df['description'].apply(remove_special_characters)
         compare_columns(df)
 
 
