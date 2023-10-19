@@ -23,9 +23,9 @@ def join_columns(row):
     col2 = str(row['Noun'])
     col3 = str(row['Modifier'])
 
-    words1 = col1.split()
-    words2 = col2.split()
-    words3 = col3.split()
+    words1 = [word.lower() for word in col1.split()]
+    words2 = [word.lower() for word in col2.split()]
+    words3 = [word.lower() for word in col3.split()]
 
     # Find common words between col1 and col2 (col1 and col3), and remove them from col1
     common_words2 = [word for word in words2 if word in words1]
