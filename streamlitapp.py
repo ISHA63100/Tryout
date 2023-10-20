@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 import time
 import base64
-
+def center_align_button(button_label):
+    return f'<div style="display: flex; justify-content: center;"><button>{button_label}</button></div>'
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
