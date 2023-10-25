@@ -96,6 +96,8 @@ def process_files(df):
         st.dataframe(df, height=300)
 
 def material_classification:
+    st.empty()  # Clear the current content
+    
     results = []
     total = len(rows)
 
