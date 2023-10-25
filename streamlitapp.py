@@ -90,12 +90,25 @@ def process_files(df):
             st.download_button("Download Duplicated flagged", deduplicated.to_csv(), key='download_duplicates', mime='text/csv')
 
         if st.button("Go To Material Classification"):
-            st.experimental_set_query_params(material_classification=True)  # Switch to Material Classification page
+            
 
         st.subheader("Uploaded Data:")
         st.dataframe(df, height=300)
 
-       
+def material_classification:
+    results = []
+    total = len(rows)
+
+    st.write("Classifying materials:")
+    progress_bar = st.progress(0)
+
+    for i, rows in enumerate(rows):
+        result = classify_material(rows)
+        results.append(result)
+
+        
+        progress = (i + 1) / total
+        progress_bar.progress(progress)
 
 def flag_duplicates(df):
     # Your duplicate flagging logic here
